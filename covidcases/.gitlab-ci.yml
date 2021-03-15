@@ -1,0 +1,22 @@
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - docker
+  script:
+    - dbuild docker/Dockerfile.build
+      --build-arg AUTH0_CLIENT_ID=cnn7yiqq2HH9667aDEGYpQOtfp8bP0Ag
+      --build-arg AUTH0_DOMAIN=tedo.auth0.com
+
+deploy:
+   stage: deploy
+   only:
+     - master
+   tags:
+     - docker
+   script:
+     - ddeploy tedo tedofe
